@@ -14,14 +14,34 @@ print("Fórmula del compuesto:", water.formula)
 print("Masa molar del agua (H2O):", water.molar_mass(), "g/mol")
 
 # 3. Composición porcentual en masa
-percent_composition = water.percent_composition()
-print("Composición porcentual del agua:")
-for element, percentage in percent_composition.items():
-    print(f" - {element}: {percentage:.2f}%")
+from chemlib import Compound
 
-# 4. Estequiometría (balancear una ecuación)
-from chemlib import Reaction
+# Crear un compuesto químico
+compound = Compound("H2O")  
 
-reaction = Reaction({"H2": 2, "O2": 1}, {"H2O": 2})
-print("Balance de la reacción:", reaction.is_balanced())  # Debe devolver True
-print("Ecuación balanceada:", reaction.formula)
+# Obtener los elementos del compuesto
+elements = compound.occurences.keys() 
+
+# Calcular y mostrar la composición porcentual en masa de cada elemento
+print(f"Composición porcentual en masa de {compound.formula}:")
+for element in elements:
+    percentage = compound.percentage_by_mass(element)
+    print(f"{element}: {percentage:.2f}%")
+
+# 4. Estequiometría 
+from chemlib import Compound
+
+# Crear un compuesto químico
+compound = Compound("H2O")  
+
+# Cantidad inicial en gramos
+cantidad_gramos = 5  
+
+# Calcular cantidades estequiométricas
+resultados = compound.get_amounts(grams=cantidad_gramos)
+
+# Mostrar los resultados
+print(f"Resultados estequiométricos para {compound.formula}:")
+print(f"Gramos: {resultados['grams']:.2f} g")
+print(f"Moles: {resultados['moles']:.4f} mol")
+print(f"Moléculas: {resultados['molecules']:.2e} moléculas")
